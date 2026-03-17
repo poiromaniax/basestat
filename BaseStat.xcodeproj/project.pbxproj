@@ -1,0 +1,585 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AABB55000000000000000001 /* BaseStatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000001 /* BaseStatApp.swift */; };
+		AABB55000000000000000002 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000002 /* UserProfile.swift */; };
+		AABB55000000000000000003 /* HealthSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000003 /* HealthSnapshot.swift */; };
+		AABB55000000000000000004 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000004 /* Achievement.swift */; };
+		AABB55000000000000000005 /* AchievementDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000005 /* AchievementDefinitions.swift */; };
+		AABB55000000000000000006 /* Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000006 /* Streak.swift */; };
+		AABB55000000000000000007 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000007 /* Challenge.swift */; };
+		AABB55000000000000000008 /* ActivityLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000008 /* ActivityLog.swift */; };
+		AABB55000000000000000009 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000009 /* HealthKitManager.swift */; };
+		AABB5500000000000000000A /* GamificationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000000A /* GamificationEngine.swift */; };
+		AABB5500000000000000000B /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000000B /* NotificationManager.swift */; };
+		AABB5500000000000000000C /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000000C /* DashboardViewModel.swift */; };
+		AABB5500000000000000000D /* HealthDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000000D /* HealthDetailViewModel.swift */; };
+		AABB5500000000000000000E /* AchievementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000000E /* AchievementsViewModel.swift */; };
+		AABB5500000000000000000F /* ChallengesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000000F /* ChallengesViewModel.swift */; };
+		AABB55000000000000000010 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000010 /* ProfileViewModel.swift */; };
+		AABB55000000000000000011 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000011 /* DashboardView.swift */; };
+		AABB55000000000000000012 /* MetricCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000012 /* MetricCardView.swift */; };
+		AABB55000000000000000013 /* XPProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000013 /* XPProgressBar.swift */; };
+		AABB55000000000000000014 /* HealthDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000014 /* HealthDetailView.swift */; };
+		AABB55000000000000000015 /* HealthChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000015 /* HealthChartView.swift */; };
+		AABB55000000000000000016 /* AchievementsGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000016 /* AchievementsGalleryView.swift */; };
+		AABB55000000000000000017 /* AchievementBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000017 /* AchievementBadgeView.swift */; };
+		AABB55000000000000000018 /* ChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000018 /* ChallengesView.swift */; };
+		AABB55000000000000000019 /* ChallengeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000019 /* ChallengeCardView.swift */; };
+		AABB5500000000000000001A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000001A /* ProfileView.swift */; };
+		AABB5500000000000000001B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000001B /* OnboardingView.swift */; };
+		AABB5500000000000000001C /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000001C /* GlassCard.swift */; };
+		AABB5500000000000000001D /* GlassProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000001D /* GlassProgressRing.swift */; };
+		AABB5500000000000000001E /* GradientMeshBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000001E /* GradientMeshBackground.swift */; };
+		AABB5500000000000000001F /* StreakFlameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000001F /* StreakFlameView.swift */; };
+		AABB55000000000000000020 /* LevelUpOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000020 /* LevelUpOverlay.swift */; };
+		AABB55000000000000000021 /* BadgeUnlockOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000021 /* BadgeUnlockOverlay.swift */; };
+		AABB55000000000000000022 /* BaseStatTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000022 /* BaseStatTheme.swift */; };
+		AABB55000000000000000023 /* GlassModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000023 /* GlassModifiers.swift */; };
+		AABB55000000000000000024 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000024 /* Constants.swift */; };
+		AABB55000000000000000025 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000025 /* Extensions.swift */; };
+		AABB55000000000000000026 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000027 /* Assets.xcassets */; };
+		AABB55000000000000000027 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AABB44000000000000000029 /* HealthKit.framework */; };
+		AABB55000000000000000028 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AABB4400000000000000002A /* UserNotifications.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AABB44000000000000000001 /* BaseStatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStatApp.swift; sourceTree = "<group>"; };
+		AABB44000000000000000002 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		AABB44000000000000000003 /* HealthSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthSnapshot.swift; sourceTree = "<group>"; };
+		AABB44000000000000000004 /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
+		AABB44000000000000000005 /* AchievementDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementDefinitions.swift; sourceTree = "<group>"; };
+		AABB44000000000000000006 /* Streak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Streak.swift; sourceTree = "<group>"; };
+		AABB44000000000000000007 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
+		AABB44000000000000000008 /* ActivityLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLog.swift; sourceTree = "<group>"; };
+		AABB44000000000000000009 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		AABB4400000000000000000A /* GamificationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamificationEngine.swift; sourceTree = "<group>"; };
+		AABB4400000000000000000B /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		AABB4400000000000000000C /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		AABB4400000000000000000D /* HealthDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDetailViewModel.swift; sourceTree = "<group>"; };
+		AABB4400000000000000000E /* AchievementsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsViewModel.swift; sourceTree = "<group>"; };
+		AABB4400000000000000000F /* ChallengesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesViewModel.swift; sourceTree = "<group>"; };
+		AABB44000000000000000010 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		AABB44000000000000000011 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		AABB44000000000000000012 /* MetricCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricCardView.swift; sourceTree = "<group>"; };
+		AABB44000000000000000013 /* XPProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPProgressBar.swift; sourceTree = "<group>"; };
+		AABB44000000000000000014 /* HealthDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDetailView.swift; sourceTree = "<group>"; };
+		AABB44000000000000000015 /* HealthChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthChartView.swift; sourceTree = "<group>"; };
+		AABB44000000000000000016 /* AchievementsGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsGalleryView.swift; sourceTree = "<group>"; };
+		AABB44000000000000000017 /* AchievementBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementBadgeView.swift; sourceTree = "<group>"; };
+		AABB44000000000000000018 /* ChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesView.swift; sourceTree = "<group>"; };
+		AABB44000000000000000019 /* ChallengeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCardView.swift; sourceTree = "<group>"; };
+		AABB4400000000000000001A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		AABB4400000000000000001B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		AABB4400000000000000001C /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCard.swift; sourceTree = "<group>"; };
+		AABB4400000000000000001D /* GlassProgressRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassProgressRing.swift; sourceTree = "<group>"; };
+		AABB4400000000000000001E /* GradientMeshBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientMeshBackground.swift; sourceTree = "<group>"; };
+		AABB4400000000000000001F /* StreakFlameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakFlameView.swift; sourceTree = "<group>"; };
+		AABB44000000000000000020 /* LevelUpOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpOverlay.swift; sourceTree = "<group>"; };
+		AABB44000000000000000021 /* BadgeUnlockOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeUnlockOverlay.swift; sourceTree = "<group>"; };
+		AABB44000000000000000022 /* BaseStatTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStatTheme.swift; sourceTree = "<group>"; };
+		AABB44000000000000000023 /* GlassModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassModifiers.swift; sourceTree = "<group>"; };
+		AABB44000000000000000024 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AABB44000000000000000025 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		AABB44000000000000000026 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AABB44000000000000000027 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AABB44000000000000000028 /* BaseStat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BaseStat.entitlements; sourceTree = "<group>"; };
+		AABB44000000000000000029 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		AABB4400000000000000002A /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		AABB00000000000000000003 /* BaseStat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BaseStat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AABB11000000000000000003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AABB55000000000000000027 /* HealthKit.framework in Frameworks */,
+				AABB55000000000000000028 /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AABB33000000000000000001 /* root */ = {
+			isa = PBXGroup;
+			children = (
+				AABB33000000000000000002 /* Gymmy */,
+				AABB33000000000000000003 /* Products */,
+				AABB44000000000000000029 /* HealthKit.framework */,
+				AABB4400000000000000002A /* UserNotifications.framework */,
+			);
+			sourceTree = "<group>";
+		};
+		AABB33000000000000000002 /* Gymmy */ = {
+			isa = PBXGroup;
+			children = (
+				AABB44000000000000000001 /* BaseStatApp.swift */,
+				AABB44000000000000000026 /* Info.plist */,
+				AABB44000000000000000028 /* BaseStat.entitlements */,
+				AABB44000000000000000027 /* Assets.xcassets */,
+				AABB33000000000000000004 /* Models */,
+				AABB33000000000000000005 /* Services */,
+				AABB33000000000000000006 /* ViewModels */,
+				AABB33000000000000000007 /* Views */,
+				AABB3300000000000000000F /* Theme */,
+				AABB33000000000000000010 /* Utilities */,
+			);
+			path = Gymmy;
+			sourceTree = "<group>";
+		};
+		AABB33000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AABB00000000000000000003 /* BaseStat.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AABB33000000000000000004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AABB44000000000000000002 /* UserProfile.swift */,
+				AABB44000000000000000003 /* HealthSnapshot.swift */,
+				AABB44000000000000000004 /* Achievement.swift */,
+				AABB44000000000000000005 /* AchievementDefinitions.swift */,
+				AABB44000000000000000006 /* Streak.swift */,
+				AABB44000000000000000007 /* Challenge.swift */,
+				AABB44000000000000000008 /* ActivityLog.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AABB33000000000000000005 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AABB44000000000000000009 /* HealthKitManager.swift */,
+				AABB4400000000000000000A /* GamificationEngine.swift */,
+				AABB4400000000000000000B /* NotificationManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AABB33000000000000000006 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				AABB4400000000000000000C /* DashboardViewModel.swift */,
+				AABB4400000000000000000D /* HealthDetailViewModel.swift */,
+				AABB4400000000000000000E /* AchievementsViewModel.swift */,
+				AABB4400000000000000000F /* ChallengesViewModel.swift */,
+				AABB44000000000000000010 /* ProfileViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		AABB33000000000000000007 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AABB33000000000000000008 /* Dashboard */,
+				AABB33000000000000000009 /* Health */,
+				AABB3300000000000000000A /* Achievements */,
+				AABB3300000000000000000B /* Challenges */,
+				AABB3300000000000000000C /* Profile */,
+				AABB3300000000000000000D /* Onboarding */,
+				AABB3300000000000000000E /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AABB33000000000000000008 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				AABB44000000000000000011 /* DashboardView.swift */,
+				AABB44000000000000000012 /* MetricCardView.swift */,
+				AABB44000000000000000013 /* XPProgressBar.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		AABB33000000000000000009 /* Health */ = {
+			isa = PBXGroup;
+			children = (
+				AABB44000000000000000014 /* HealthDetailView.swift */,
+				AABB44000000000000000015 /* HealthChartView.swift */,
+			);
+			path = Health;
+			sourceTree = "<group>";
+		};
+		AABB3300000000000000000A /* Achievements */ = {
+			isa = PBXGroup;
+			children = (
+				AABB44000000000000000016 /* AchievementsGalleryView.swift */,
+				AABB44000000000000000017 /* AchievementBadgeView.swift */,
+			);
+			path = Achievements;
+			sourceTree = "<group>";
+		};
+		AABB3300000000000000000B /* Challenges */ = {
+			isa = PBXGroup;
+			children = (
+				AABB44000000000000000018 /* ChallengesView.swift */,
+				AABB44000000000000000019 /* ChallengeCardView.swift */,
+			);
+			path = Challenges;
+			sourceTree = "<group>";
+		};
+		AABB3300000000000000000C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				AABB4400000000000000001A /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		AABB3300000000000000000D /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				AABB4400000000000000001B /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		AABB3300000000000000000E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				AABB4400000000000000001C /* GlassCard.swift */,
+				AABB4400000000000000001D /* GlassProgressRing.swift */,
+				AABB4400000000000000001E /* GradientMeshBackground.swift */,
+				AABB4400000000000000001F /* StreakFlameView.swift */,
+				AABB44000000000000000020 /* LevelUpOverlay.swift */,
+				AABB44000000000000000021 /* BadgeUnlockOverlay.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		AABB3300000000000000000F /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				AABB44000000000000000022 /* BaseStatTheme.swift */,
+				AABB44000000000000000023 /* GlassModifiers.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		AABB33000000000000000010 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AABB44000000000000000024 /* Constants.swift */,
+				AABB44000000000000000025 /* Extensions.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AABB00000000000000000002 /* Gymmy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AABB22000000000000000006 /* Build configuration list for PBXNativeTarget "Gymmy" */;
+			buildPhases = (
+				AABB11000000000000000001 /* Sources */,
+				AABB11000000000000000002 /* Resources */,
+				AABB11000000000000000003 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BaseStat;
+			productName = BaseStat;
+			productReference = AABB00000000000000000003 /* BaseStat.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AABB00000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					AABB00000000000000000002 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+				};
+			};
+			buildConfigurationList = AABB22000000000000000005 /* Build configuration list for PBXProject "Gymmy" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AABB33000000000000000001;
+			productRefGroup = AABB33000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AABB00000000000000000002 /* Gymmy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AABB11000000000000000002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AABB55000000000000000026 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AABB11000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AABB55000000000000000001 /* BaseStatApp.swift in Sources */,
+				AABB55000000000000000002 /* UserProfile.swift in Sources */,
+				AABB55000000000000000003 /* HealthSnapshot.swift in Sources */,
+				AABB55000000000000000004 /* Achievement.swift in Sources */,
+				AABB55000000000000000005 /* AchievementDefinitions.swift in Sources */,
+				AABB55000000000000000006 /* Streak.swift in Sources */,
+				AABB55000000000000000007 /* Challenge.swift in Sources */,
+				AABB55000000000000000008 /* ActivityLog.swift in Sources */,
+				AABB55000000000000000009 /* HealthKitManager.swift in Sources */,
+				AABB5500000000000000000A /* GamificationEngine.swift in Sources */,
+				AABB5500000000000000000B /* NotificationManager.swift in Sources */,
+				AABB5500000000000000000C /* DashboardViewModel.swift in Sources */,
+				AABB5500000000000000000D /* HealthDetailViewModel.swift in Sources */,
+				AABB5500000000000000000E /* AchievementsViewModel.swift in Sources */,
+				AABB5500000000000000000F /* ChallengesViewModel.swift in Sources */,
+				AABB55000000000000000010 /* ProfileViewModel.swift in Sources */,
+				AABB55000000000000000011 /* DashboardView.swift in Sources */,
+				AABB55000000000000000012 /* MetricCardView.swift in Sources */,
+				AABB55000000000000000013 /* XPProgressBar.swift in Sources */,
+				AABB55000000000000000014 /* HealthDetailView.swift in Sources */,
+				AABB55000000000000000015 /* HealthChartView.swift in Sources */,
+				AABB55000000000000000016 /* AchievementsGalleryView.swift in Sources */,
+				AABB55000000000000000017 /* AchievementBadgeView.swift in Sources */,
+				AABB55000000000000000018 /* ChallengesView.swift in Sources */,
+				AABB55000000000000000019 /* ChallengeCardView.swift in Sources */,
+				AABB5500000000000000001A /* ProfileView.swift in Sources */,
+				AABB5500000000000000001B /* OnboardingView.swift in Sources */,
+				AABB5500000000000000001C /* GlassCard.swift in Sources */,
+				AABB5500000000000000001D /* GlassProgressRing.swift in Sources */,
+				AABB5500000000000000001E /* GradientMeshBackground.swift in Sources */,
+				AABB5500000000000000001F /* StreakFlameView.swift in Sources */,
+				AABB55000000000000000020 /* LevelUpOverlay.swift in Sources */,
+				AABB55000000000000000021 /* BadgeUnlockOverlay.swift in Sources */,
+				AABB55000000000000000022 /* BaseStatTheme.swift in Sources */,
+				AABB55000000000000000023 /* GlassModifiers.swift in Sources */,
+				AABB55000000000000000024 /* Constants.swift in Sources */,
+				AABB55000000000000000025 /* Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AABB22000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AABB22000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AABB22000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Gymmy/BaseStat.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Gymmy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.basestat.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		AABB22000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Gymmy/BaseStat.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Gymmy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.basestat.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AABB22000000000000000005 /* Build configuration list for PBXProject "Gymmy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AABB22000000000000000001 /* Debug */,
+				AABB22000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AABB22000000000000000006 /* Build configuration list for PBXNativeTarget "Gymmy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AABB22000000000000000003 /* Debug */,
+				AABB22000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AABB00000000000000000001 /* Project object */;
+}
