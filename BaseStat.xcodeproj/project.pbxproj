@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -50,6 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AABB00000000000000000003 /* BaseStat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BaseStat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AABB44000000000000000001 /* BaseStatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStatApp.swift; sourceTree = "<group>"; };
 		AABB44000000000000000002 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		AABB44000000000000000003 /* HealthSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthSnapshot.swift; sourceTree = "<group>"; };
@@ -92,7 +93,6 @@
 		AABB44000000000000000028 /* BaseStat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BaseStat.entitlements; sourceTree = "<group>"; };
 		AABB44000000000000000029 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		AABB4400000000000000002A /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
-		AABB00000000000000000003 /* BaseStat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BaseStat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +108,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AABB33000000000000000001 /* root */ = {
+		AABB33000000000000000001 = {
 			isa = PBXGroup;
 			children = (
 				AABB33000000000000000002 /* Gymmy */,
@@ -280,9 +280,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AABB00000000000000000002 /* Gymmy */ = {
+		AABB00000000000000000002 /* BaseStat */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AABB22000000000000000006 /* Build configuration list for PBXNativeTarget "Gymmy" */;
+			buildConfigurationList = AABB22000000000000000006 /* Build configuration list for PBXNativeTarget "BaseStat" */;
 			buildPhases = (
 				AABB11000000000000000001 /* Sources */,
 				AABB11000000000000000002 /* Resources */,
@@ -305,14 +305,14 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2600;
-				LastUpgradeCheck = 2600;
+				LastUpgradeCheck = 2630;
 				TargetAttributes = {
 					AABB00000000000000000002 = {
 						CreatedOnToolsVersion = 26.0;
 					};
 				};
 			};
-			buildConfigurationList = AABB22000000000000000005 /* Build configuration list for PBXProject "Gymmy" */;
+			buildConfigurationList = AABB22000000000000000005 /* Build configuration list for PBXProject "BaseStat" */;
 			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -325,7 +325,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AABB00000000000000000002 /* Gymmy */,
+				AABB00000000000000000002 /* BaseStat */,
 			);
 		};
 /* End PBXProject section */
@@ -424,6 +424,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 648K26ZSKM;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -446,6 +447,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -486,6 +488,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 648K26ZSKM;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -501,6 +504,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -526,6 +530,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.basestat.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -552,6 +560,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.basestat.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -561,7 +573,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AABB22000000000000000005 /* Build configuration list for PBXProject "Gymmy" */ = {
+		AABB22000000000000000005 /* Build configuration list for PBXProject "BaseStat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AABB22000000000000000001 /* Debug */,
@@ -570,7 +582,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AABB22000000000000000006 /* Build configuration list for PBXNativeTarget "Gymmy" */ = {
+		AABB22000000000000000006 /* Build configuration list for PBXNativeTarget "BaseStat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AABB22000000000000000003 /* Debug */,
