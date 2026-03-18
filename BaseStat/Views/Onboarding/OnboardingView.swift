@@ -10,8 +10,9 @@ struct OnboardingView: View {
     @State private var goalWeight: String = ""
     @State private var weightUnit: String = "kg"
     @State private var requestingHealth = false
+    @State private var historyOption: Constants.HistoryOption = .oneYear
 
-    private let totalPages = 4
+    private let totalPages = 5
 
     var body: some View {
         ZStack {
@@ -23,6 +24,7 @@ struct OnboardingView: View {
                     namePage.tag(1)
                     goalPage.tag(2)
                     healthPermissionPage.tag(3)
+                    historyPage.tag(4)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.spring(duration: BaseStatTheme.Animation.normal), value: page)
@@ -42,16 +44,12 @@ struct OnboardingView: View {
     private var welcomePage: some View {
         VStack(spacing: BaseStatTheme.Spacing.lg) {
             Spacer()
-            Image(systemName: "figure.run.circle.fill")
-                .font(.system(size: 90))
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [BaseStatTheme.primaryTeal, .cyan],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .shadow(color: BaseStatTheme.primaryTeal.opacity(0.5), radius: 20)
+            Image("AppLogo")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 110, height: 110)
+                .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+                .shadow(color: BaseStatTheme.primaryTeal.opacity(0.6), radius: 24)
 
             VStack(spacing: BaseStatTheme.Spacing.sm) {
                 Text("Welcome to BaseStat")
@@ -183,6 +181,57 @@ struct OnboardingView: View {
         .padding(.horizontal, BaseStatTheme.Spacing.lg)
     }
 
+    private var historyPage: some View {
+        VStack(spacing: BaseStatTheme.Spacing.lg) {
+            Spacer()
+            Image(systemName: "clock.arrow.circlepath")
+                .font(.system(size: 72))
+                .foregroundStyle(LinearGradient(colors: [BaseStatTheme.primaryTeal, .cyan], startPoint: .topLeading, endPoint: .bottomTrailing))
+                .shadow(color: BaseStatTheme.primaryTeal.opacity(0.4), radius: 16)
+
+            VStack(spacing: BaseStatTheme.Spacing.sm) {
+                Text("Import Health History")
+                    .font(BaseStatTheme.Typography.title1)
+                Text("Choose how far back to pull your Apple Health data. More history unlocks more personal records and achievements.")
+                    .font(BaseStatTheme.Typography.body)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+
+            GlassCard(cornerRadius: BaseStatTheme.Radius.md) {
+                VStack(spacing: BaseStatTheme.Spacing.xs) {
+                    ForEach(Constants.HistoryOption.allCases) { option in
+                        Button {
+                            withAnimation(.spring(duration: 0.2)) { historyOption = option }
+                        } label: {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(option.label)
+                                        .font(BaseStatTheme.Typography.bodySemibold)
+                                        .foregroundStyle(.primary)
+                                    Text(option.description)
+                                        .font(BaseStatTheme.Typography.small)
+                                        .foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                                if historyOption == option {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundStyle(BaseStatTheme.primaryTeal)
+                                }
+                            }
+                            .padding(.vertical, BaseStatTheme.Spacing.xs)
+                        }
+                        if option != Constants.HistoryOption.allCases.last {
+                            Divider().opacity(0.3)
+                        }
+                    }
+                }
+            }
+            Spacer()
+        }
+        .padding(.horizontal, BaseStatTheme.Spacing.lg)
+    }
+
     // MARK: - Navigation
 
     private var pageIndicator: some View {
@@ -249,9 +298,12 @@ struct OnboardingView: View {
         try? context.save()
 
         UserDefaults.standard.set(true, forKey: Constants.UserDefaultsKeys.onboardingComplete)
+        UserDefaults.standard.set(historyOption.rawValue, forKey: Constants.UserDefaultsKeys.healthHistoryDays)
 
         Task {
             try? await HealthKitManager.shared.requestAuthorization()
+            await HealthKitManager.shared.importHealthHistory(days: historyOption.rawValue, context: context)
+            await engine.checkPersonalRecords(context: context)
             await NotificationManager.shared.requestAuthorization()
             NotificationManager.shared.scheduleStreakReminder()
 

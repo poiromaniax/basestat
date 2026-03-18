@@ -1,7 +1,7 @@
 import Foundation
 
 enum AchievementCatalog {
-    static let all: [AchievementDefinition] = weight + steps + exercise + sleep + heart + meta
+    static let all: [AchievementDefinition] = weight + steps + exercise + sleep + heart + meta + records
 
     // MARK: - Weight
     static let weight: [AchievementDefinition] = [
@@ -248,6 +248,73 @@ enum AchievementCatalog {
             description: "Welcome to BaseStat! Your legend starts here.",
             icon: "figure.run",
             category: .meta, xpReward: 25, rarity: .common
+        )
+    ]
+
+    // MARK: - Personal Records
+    static let records: [AchievementDefinition] = [
+        AchievementDefinition(
+            id: "pr.lowest_weight",
+            title: "Lightest Ever",
+            description: "Hit your all-time lowest recorded weight.",
+            icon: "scalemass.fill",
+            category: .records, xpReward: 500, rarity: .epic
+        ),
+        AchievementDefinition(
+            id: "pr.steps_20k",
+            title: "20K Day",
+            description: "Walk 20,000 steps in a single day.",
+            icon: "figure.walk.circle.fill",
+            category: .records, xpReward: 200, rarity: .rare
+        ),
+        AchievementDefinition(
+            id: "pr.steps_30k",
+            title: "30K Crusher",
+            description: "Walk 30,000 steps in a single day.",
+            icon: "figure.walk.diamond.fill",
+            category: .records, xpReward: 500, rarity: .epic
+        ),
+        AchievementDefinition(
+            id: "pr.steps_50k",
+            title: "Ultra Walker",
+            description: "Walk 50,000 steps in a single day.",
+            icon: "trophy.fill",
+            category: .records, xpReward: 1500, rarity: .legendary
+        ),
+        AchievementDefinition(
+            id: "pr.calories_1000",
+            title: "1000 Cal Burn",
+            description: "Burn 1,000 active calories in a single day.",
+            icon: "flame.circle.fill",
+            category: .records, xpReward: 300, rarity: .rare
+        ),
+        AchievementDefinition(
+            id: "pr.calories_2000",
+            title: "Inferno Day",
+            description: "Burn 2,000 active calories in a single day.",
+            icon: "flame.fill",
+            category: .records, xpReward: 750, rarity: .epic
+        ),
+        AchievementDefinition(
+            id: "pr.workout_60min",
+            title: "Hour of Iron",
+            description: "Complete a single workout lasting 60 minutes.",
+            icon: "dumbbell.fill",
+            category: .records, xpReward: 200, rarity: .rare
+        ),
+        AchievementDefinition(
+            id: "pr.workout_120min",
+            title: "Two Hour Beast",
+            description: "Complete a single workout lasting 2 hours.",
+            icon: "bolt.circle.fill",
+            category: .records, xpReward: 600, rarity: .epic
+        ),
+        AchievementDefinition(
+            id: "pr.workout_180min",
+            title: "Endurance Legend",
+            description: "Complete a single workout lasting 3+ hours.",
+            icon: "crown.fill",
+            category: .records, xpReward: 1500, rarity: .legendary
         )
     ]
 }

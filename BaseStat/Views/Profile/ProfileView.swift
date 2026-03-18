@@ -5,6 +5,7 @@ struct ProfileView: View {
     @Environment(\.modelContext) private var context
     @State private var viewModel = ProfileViewModel()
     @State private var showEditProfile = false
+    @State private var selectedHistory: Constants.HistoryOption = Constants.HistoryOption.saved
 
     var body: some View {
         NavigationStack {
@@ -17,6 +18,7 @@ struct ProfileView: View {
                         statsGrid
                         streaksCard
                         recentActivityCard
+                        healthSettingsCard
                     }
                     .padding(.horizontal, BaseStatTheme.Spacing.md)
                     .padding(.bottom, BaseStatTheme.Spacing.xxl)
@@ -181,7 +183,43 @@ struct ProfileView: View {
         }
     }
 
-    // MARK: - Recent Activity Card
+    // MARK: - Health Settings Card
+
+    private var healthSettingsCard: some View {
+        GlassCard(cornerRadius: BaseStatTheme.Radius.md) {
+            VStack(alignment: .leading, spacing: BaseStatTheme.Spacing.sm) {
+                Text("Health History")
+                    .sectionHeaderStyle()
+
+                ForEach(Constants.HistoryOption.allCases) { option in
+                    Button {
+                        selectedHistory = option
+                        UserDefaults.standard.set(option.rawValue, forKey: Constants.UserDefaultsKeys.healthHistoryDays)
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(option.label)
+                                    .font(BaseStatTheme.Typography.bodySemibold)
+                                    .foregroundStyle(.primary)
+                                Text(option.description)
+                                    .font(BaseStatTheme.Typography.small)
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            if selectedHistory == option {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundStyle(BaseStatTheme.primaryTeal)
+                            }
+                        }
+                        .padding(.vertical, 2)
+                    }
+                    if option != Constants.HistoryOption.allCases.last {
+                        Divider().opacity(0.3)
+                    }
+                }
+            }
+        }
+    }
 
     private var recentActivityCard: some View {
         Group {

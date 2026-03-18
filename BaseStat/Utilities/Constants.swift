@@ -33,5 +33,39 @@ enum Constants {
         static let onboardingComplete     = "onboardingComplete"
         static let lastHealthSyncDate     = "lastHealthSyncDate"
         static let startingWeightKg       = "startingWeightKg"
+        static let healthHistoryDays      = "healthHistoryDays"
+        static let lastDailyLoginDate     = "lastDailyLoginDate"
+    }
+
+    enum HistoryOption: Int, CaseIterable, Identifiable {
+        case threeMonths  = 90
+        case sixMonths    = 180
+        case oneYear      = 365
+        case twoYears     = 730
+
+        var id: Int { rawValue }
+
+        var label: String {
+            switch self {
+            case .threeMonths: return "3 Months"
+            case .sixMonths:   return "6 Months"
+            case .oneYear:     return "1 Year"
+            case .twoYears:    return "2 Years"
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .threeMonths: return "Quick start — recent data only"
+            case .sixMonths:   return "Half a year of trends"
+            case .oneYear:     return "Full year of insights"
+            case .twoYears:    return "Deep history & personal records"
+            }
+        }
+
+        static var saved: HistoryOption {
+            let days = UserDefaults.standard.integer(forKey: Constants.UserDefaultsKeys.healthHistoryDays)
+            return HistoryOption(rawValue: days) ?? .oneYear
+        }
     }
 }

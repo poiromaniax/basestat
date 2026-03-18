@@ -80,9 +80,14 @@ final class GamificationEngine {
             awardXP(BaseStatTheme.XPRewards.calorieGoal, reason: .calorieGoalHit, description: "Hit calorie burn goal", context: context)
         }
 
-        // Daily login
-        awardXP(BaseStatTheme.XPRewards.dailyLogin, reason: .stepsGoalHit, description: "Daily login", context: context)
-        updateStreak(type: .dailyLogin, context: context)
+        // Daily login — once per calendar day only
+        let today = Calendar.current.startOfDay(for: Date())
+        let lastLogin = UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.lastDailyLoginDate) as? Date
+        if lastLogin == nil || Calendar.current.startOfDay(for: lastLogin!) < today {
+            awardXP(BaseStatTheme.XPRewards.dailyLogin, reason: .stepsGoalHit, description: "Daily login", context: context)
+            updateStreak(type: .dailyLogin, context: context)
+            UserDefaults.standard.set(Date(), forKey: Constants.UserDefaultsKeys.lastDailyLoginDate)
+        }
 
         // Weight logged
         if snapshot.weightKg != nil {
@@ -323,6 +328,31 @@ final class GamificationEngine {
             }
         }
         try? context.save()
+    }
+
+    // MARK: - Personal Records
+
+    func checkPersonalRecords(context: ModelContext) async {
+        let prs = await HealthKitManager.shared.fetchPersonalRecords()
+        let unlockedIds = Set(
+            ((try? context.fetch(FetchDescriptor<Achievement>())) ?? [])
+                .filter(\.isUnlocked).map(\.definitionId)
+        )
+        var candidates: [String] = []
+        if prs.lowestWeightKg != nil { candidates.append("pr.lowest_weight") }
+        if prs.mostStepsInDay >= 20_000 { candidates.append("pr.steps_20k") }
+        if prs.mostStepsInDay >= 30_000 { candidates.append("pr.steps_30k") }
+        if prs.mostStepsInDay >= 50_000 { candidates.append("pr.steps_50k") }
+        if prs.mostActiveCaloriesInDay >= 1_000 { candidates.append("pr.calories_1000") }
+        if prs.mostActiveCaloriesInDay >= 2_000 { candidates.append("pr.calories_2000") }
+        if prs.longestWorkoutMinutes >= 60 { candidates.append("pr.workout_60min") }
+        if prs.longestWorkoutMinutes >= 120 { candidates.append("pr.workout_120min") }
+        if prs.longestWorkoutMinutes >= 180 { candidates.append("pr.workout_180min") }
+        for id in candidates where !unlockedIds.contains(id) {
+            if let def = AchievementCatalog.all.first(where: { $0.id == id }) {
+                unlockAchievement(def, context: context)
+            }
+        }
     }
 
     // MARK: - Profile

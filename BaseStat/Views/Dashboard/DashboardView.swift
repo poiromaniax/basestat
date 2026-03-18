@@ -13,6 +13,7 @@ struct DashboardView: View {
 
                 ScrollView {
                     LazyVStack(spacing: BaseStatTheme.Spacing.md) {
+                        scrollableHeader
                         heroSection
                         xpSection
                         metricsGrid
@@ -25,23 +26,7 @@ struct DashboardView: View {
                     .padding(.bottom, BaseStatTheme.Spacing.xxl)
                 }
             }
-            .navigationTitle("")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Text("BaseStat")
-                        .font(BaseStatTheme.Typography.title2)
-                        .foregroundStyle(.primary)
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        HealthDetailRootView()
-                    } label: {
-                        Image(systemName: "chart.line.uptrend.xyaxis")
-                            .font(.system(size: 17, weight: .semibold))
-                    }
-                }
-            }
+            .navigationBarHidden(true)
             .overlay { overlays }
             .task { await viewModel.load(context: context) }
             .refreshable { await viewModel.load(context: context) }
@@ -49,6 +34,25 @@ struct DashboardView: View {
     }
 
     // MARK: - Sections
+
+    private var scrollableHeader: some View {
+        HStack {
+            Image("AppLogo")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 32, height: 32)
+                .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
+            Spacer()
+            NavigationLink {
+                HealthDetailRootView()
+            } label: {
+                Image(systemName: "chart.line.uptrend.xyaxis")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(.primary)
+            }
+        }
+        .padding(.top, BaseStatTheme.Spacing.sm)
+    }
 
     private var heroSection: some View {
         GlassCard(cornerRadius: BaseStatTheme.Radius.lg) {

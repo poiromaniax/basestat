@@ -1,6 +1,7 @@
 import Foundation
 import HealthKit
 import Observation
+import SwiftData
 
 @Observable
 @MainActor
@@ -108,6 +109,157 @@ final class HealthKitManager {
             dietaryCalories: todayDietaryCalories,
             distanceKm: todayDistanceKm
         )
+    }
+
+    // MARK: - Personal Records
+
+    struct PersonalRecords {
+        var lowestWeightKg: Double?
+        var mostStepsInDay: Int
+        var mostActiveCaloriesInDay: Double
+        var longestWorkoutMinutes: Int
+    }
+
+    func fetchPersonalRecords() async -> PersonalRecords {
+        async let weight   = fetchAllTimeLowestWeight()
+        async let steps    = fetchAllTimeMostSteps()
+        async let calories = fetchAllTimeMostActiveCalories()
+        async let workout  = fetchAllTimeLongestWorkout()
+        let (wt, st, cal, wo) = await (weight, steps, calories, workout)
+        return PersonalRecords(
+            lowestWeightKg: wt,
+            mostStepsInDay: st,
+            mostActiveCaloriesInDay: cal,
+            longestWorkoutMinutes: wo
+        )
+    }
+
+    private func fetchAllTimeLowestWeight() async -> Double? {
+        guard let type = HKQuantityType.quantityType(forIdentifier: .bodyMass) else { return nil }
+        let predicate = HKQuery.predicateForSamples(withStart: .distantPast, end: Date())
+        return await withCheckedContinuation { continuation in
+            let sort = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
+            let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sort]) { _, samples, _ in
+                let values = (samples as? [HKQuantitySample] ?? []).map { $0.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo)) }
+                continuation.resume(returning: values.min())
+            }
+            store.execute(query)
+        }
+    }
+
+    private func fetchAllTimeMostSteps() async -> Int {
+        guard let type = HKQuantityType.quantityType(forIdentifier: .stepCount) else { return 0 }
+        let start = Date.distantPast
+        let interval = DateComponents(day: 1)
+        let predicate = HKQuery.predicateForSamples(withStart: start, end: Date())
+        return await withCheckedContinuation { continuation in
+            let query = HKStatisticsCollectionQuery(
+                quantityType: type, quantitySamplePredicate: predicate,
+                options: .cumulativeSum, anchorDate: Calendar.current.startOfDay(for: Date()),
+                intervalComponents: interval
+            )
+            query.initialResultsHandler = { _, collection, _ in
+                var best = 0.0
+                collection?.enumerateStatistics(from: start, to: Date()) { stats, _ in
+                    best = max(best, stats.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0)
+                }
+                continuation.resume(returning: Int(best))
+            }
+            store.execute(query)
+        }
+    }
+
+    private func fetchAllTimeMostActiveCalories() async -> Double {
+        guard let type = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned) else { return 0 }
+        let start = Date.distantPast
+        let interval = DateComponents(day: 1)
+        let predicate = HKQuery.predicateForSamples(withStart: start, end: Date())
+        return await withCheckedContinuation { continuation in
+            let query = HKStatisticsCollectionQuery(
+                quantityType: type, quantitySamplePredicate: predicate,
+                options: .cumulativeSum, anchorDate: Calendar.current.startOfDay(for: Date()),
+                intervalComponents: interval
+            )
+            query.initialResultsHandler = { _, collection, _ in
+                var best = 0.0
+                collection?.enumerateStatistics(from: start, to: Date()) { stats, _ in
+                    best = max(best, stats.sumQuantity()?.doubleValue(for: HKUnit.kilocalorie()) ?? 0)
+                }
+                continuation.resume(returning: best)
+            }
+            store.execute(query)
+        }
+    }
+
+    private func fetchAllTimeLongestWorkout() async -> Int {
+        return await withCheckedContinuation { continuation in
+            let predicate = HKQuery.predicateForSamples(withStart: .distantPast, end: Date())
+            let query = HKSampleQuery(sampleType: HKObjectType.workoutType(), predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, samples, _ in
+                let best = (samples as? [HKWorkout] ?? []).map { Int($0.duration / 60) }.max() ?? 0
+                continuation.resume(returning: best)
+            }
+            store.execute(query)
+        }
+    }
+
+    // MARK: - History Import
+
+    func importHealthHistory(days: Int, context: ModelContext) async {
+        guard isAuthorized else { return }
+        let calendar = Calendar.current
+        let start = calendar.date(byAdding: .day, value: -days, to: Date()) ?? Date()
+
+        async let weightData   = fetchWeightHistory(days: days)
+        async let stepsData    = fetchStepsHistory(days: days)
+        async let caloriesData = fetchActiveCaloriesHistory(days: days)
+        async let sleepData    = fetchSleepHistory(days: days)
+        async let exerciseData = fetchExerciseHistory(days: days)
+
+        let (weights, steps, calories, sleep, exercise) = await (weightData, stepsData, caloriesData, sleepData, exerciseData)
+
+        var dayMap: [Date: HealthSnapshot] = [:]
+
+        func dayKey(_ date: Date) -> Date { calendar.startOfDay(for: date) }
+
+        for (date, kg) in weights {
+            let key = dayKey(date)
+            if dayMap[key] == nil { dayMap[key] = HealthSnapshot(date: key) }
+            dayMap[key]?.weightKg = kg
+        }
+        for (date, value) in steps {
+            let key = dayKey(date)
+            if dayMap[key] == nil { dayMap[key] = HealthSnapshot(date: key) }
+            dayMap[key]?.steps = Int(value)
+        }
+        for (date, value) in calories {
+            let key = dayKey(date)
+            if dayMap[key] == nil { dayMap[key] = HealthSnapshot(date: key) }
+            dayMap[key]?.activeCalories = value
+        }
+        for (date, hours) in sleep {
+            let key = dayKey(date)
+            if dayMap[key] == nil { dayMap[key] = HealthSnapshot(date: key) }
+            dayMap[key]?.sleepHours = hours
+        }
+        for (date, value) in exercise {
+            let key = dayKey(date)
+            if dayMap[key] == nil { dayMap[key] = HealthSnapshot(date: key) }
+            dayMap[key]?.exerciseMinutes = Int(value)
+        }
+
+        let snapshots = dayMap.values.filter { $0.date >= start }.sorted { $0.date < $1.date }
+        await MainActor.run {
+            for snapshot in snapshots {
+                context.insert(snapshot)
+            }
+            try? context.save()
+        }
+    }
+
+    private func fetchExerciseHistory(days: Int) async -> [(date: Date, value: Double)] {
+        guard let type = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime) else { return [] }
+        let start = Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
+        return await fetchDailyStatistics(type: type, from: start, unit: HKUnit.minute())
     }
 
     // MARK: - Historical Data

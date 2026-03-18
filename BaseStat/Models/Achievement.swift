@@ -37,6 +37,7 @@ enum AchievementCategory: String, CaseIterable, Sendable {
     case sleep    = "Sleep"
     case heart    = "Heart"
     case meta     = "Milestones"
+    case records  = "Personal Records"
 
     var icon: String {
         switch self {
@@ -46,6 +47,7 @@ enum AchievementCategory: String, CaseIterable, Sendable {
         case .sleep:    return "moon.zzz.fill"
         case .heart:    return "heart.fill"
         case .meta:     return "star.fill"
+        case .records:  return "trophy.fill"
         }
     }
 }
