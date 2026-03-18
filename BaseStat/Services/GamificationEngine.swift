@@ -261,7 +261,8 @@ final class GamificationEngine {
     }
 
     func unlockAchievement(_ def: AchievementDefinition, context: ModelContext) {
-        let descriptor = FetchDescriptor<Achievement>(predicate: #Predicate { $0.definitionId == def.id })
+        let defId = def.id
+        let descriptor = FetchDescriptor<Achievement>(predicate: #Predicate { $0.definitionId == defId })
         if let existing = (try? context.fetch(descriptor))?.first {
             if !existing.isUnlocked {
                 existing.isUnlocked = true

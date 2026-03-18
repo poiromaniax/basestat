@@ -34,17 +34,22 @@ enum ChallengeMetric: String, Codable, CaseIterable {
 
 @Model
 final class Challenge {
-    var id: UUID
-    var title: String
-    var challengeDescription: String
-    var metric: ChallengeMetric
-    var targetValue: Double
-    var currentValue: Double
-    var startDate: Date
-    var endDate: Date
-    var xpReward: Int
-    var isCompleted: Bool
-    var isActive: Bool
+    var id: UUID = UUID()
+    var title: String = ""
+    var challengeDescription: String = ""
+    var metricRawValue: String = ChallengeMetric.steps.rawValue
+    var targetValue: Double = 0
+    var currentValue: Double = 0
+    var startDate: Date = Date()
+    var endDate: Date = Date()
+    var xpReward: Int = 0
+    var isCompleted: Bool = false
+    var isActive: Bool = true
+
+    var metric: ChallengeMetric {
+        get { ChallengeMetric(rawValue: metricRawValue) ?? .steps }
+        set { metricRawValue = newValue.rawValue }
+    }
 
     init(
         id: UUID = UUID(),
@@ -62,7 +67,7 @@ final class Challenge {
         self.id = id
         self.title = title
         self.challengeDescription = challengeDescription
-        self.metric = metric
+        self.metricRawValue = metric.rawValue
         self.targetValue = targetValue
         self.currentValue = currentValue
         self.startDate = startDate

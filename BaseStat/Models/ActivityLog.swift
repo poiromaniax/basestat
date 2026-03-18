@@ -29,12 +29,17 @@ enum ActivityType: String, Codable {
 
 @Model
 final class ActivityLog {
-    var id: UUID
-    var timestamp: Date
-    var type: ActivityType
-    var xpEarned: Int
-    var eventDescription: String
+    var id: UUID = UUID()
+    var timestamp: Date = Date()
+    var typeRawValue: String = ActivityType.weightLogged.rawValue
+    var xpEarned: Int = 0
+    var eventDescription: String = ""
     var relatedId: String?
+
+    var type: ActivityType {
+        get { ActivityType(rawValue: typeRawValue) ?? .weightLogged }
+        set { typeRawValue = newValue.rawValue }
+    }
 
     init(
         id: UUID = UUID(),
@@ -46,7 +51,7 @@ final class ActivityLog {
     ) {
         self.id = id
         self.timestamp = timestamp
-        self.type = type
+        self.typeRawValue = type.rawValue
         self.xpEarned = xpEarned
         self.eventDescription = eventDescription
         self.relatedId = relatedId

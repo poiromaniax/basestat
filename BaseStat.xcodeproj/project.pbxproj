@@ -111,14 +111,14 @@
 		AABB33000000000000000001 = {
 			isa = PBXGroup;
 			children = (
-				AABB33000000000000000002 /* Gymmy */,
+				AABB33000000000000000002 /* BaseStat */,
 				AABB33000000000000000003 /* Products */,
 				AABB44000000000000000029 /* HealthKit.framework */,
 				AABB4400000000000000002A /* UserNotifications.framework */,
 			);
 			sourceTree = "<group>";
 		};
-		AABB33000000000000000002 /* Gymmy */ = {
+		AABB33000000000000000002 /* BaseStat */ = {
 			isa = PBXGroup;
 			children = (
 				AABB44000000000000000001 /* BaseStatApp.swift */,
@@ -132,7 +132,7 @@
 				AABB3300000000000000000F /* Theme */,
 				AABB33000000000000000010 /* Utilities */,
 			);
-			path = Gymmy;
+			path = BaseStat;
 			sourceTree = "<group>";
 		};
 		AABB33000000000000000003 /* Products */ = {
@@ -515,13 +515,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Gymmy/BaseStat.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BaseStat/BaseStat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Gymmy/Info.plist;
+				INFOPLIST_FILE = BaseStat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -545,13 +545,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Gymmy/BaseStat.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BaseStat/BaseStat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Gymmy/Info.plist;
+				INFOPLIST_FILE = BaseStat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

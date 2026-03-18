@@ -3,14 +3,14 @@ import SwiftData
 
 @Model
 final class UserProfile {
-    var id: UUID
-    var name: String
-    var totalXP: Int
-    var level: Int
-    var joinDate: Date
-    var weightGoalKg: Double
-    var weightUnit: String
-    var onboardingComplete: Bool
+    var id: UUID = UUID()
+    var name: String = ""
+    var totalXP: Int = 0
+    var level: Int = 1
+    var joinDate: Date = Date()
+    var weightGoalKg: Double = 70.0
+    var weightUnit: String = "kg"
+    var onboardingComplete: Bool = false
     var photoData: Data?
 
     init(

@@ -1,8 +1,8 @@
 included:
-  - Gymmy
+  - BaseStat
 
 excluded:
-  - Gymmy.xcodeproj
+  - BaseStat.xcodeproj
 
 line_length:
   warning: 160

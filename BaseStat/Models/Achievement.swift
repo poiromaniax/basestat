@@ -3,9 +3,9 @@ import SwiftData
 
 @Model
 final class Achievement {
-    var definitionId: String
+    var definitionId: String = ""
     var unlockedDate: Date?
-    var isUnlocked: Bool
+    var isUnlocked: Bool = false
 
     init(definitionId: String, isUnlocked: Bool = false, unlockedDate: Date? = nil) {
         self.definitionId = definitionId

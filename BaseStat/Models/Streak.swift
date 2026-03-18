@@ -41,13 +41,18 @@ enum StreakType: String, Codable, CaseIterable {
 
 @Model
 final class Streak {
-    var type: StreakType
-    var currentCount: Int
-    var longestCount: Int
+    var typeRawValue: String = StreakType.dailyLogin.rawValue
+    var currentCount: Int = 0
+    var longestCount: Int = 0
     var lastActiveDate: Date?
 
+    var type: StreakType {
+        get { StreakType(rawValue: typeRawValue) ?? .dailyLogin }
+        set { typeRawValue = newValue.rawValue }
+    }
+
     init(type: StreakType, currentCount: Int = 0, longestCount: Int = 0, lastActiveDate: Date? = nil) {
-        self.type = type
+        self.typeRawValue = type.rawValue
         self.currentCount = currentCount
         self.longestCount = longestCount
         self.lastActiveDate = lastActiveDate

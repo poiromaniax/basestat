@@ -6,20 +6,32 @@ struct BaseStatApp: App {
     let container: ModelContainer
 
     init() {
+        let schema = Schema([
+            UserProfile.self,
+            HealthSnapshot.self,
+            Achievement.self,
+            Streak.self,
+            Challenge.self,
+            ActivityLog.self
+        ])
+        let config = ModelConfiguration(
+            "BaseStat",
+            schema: schema,
+            isStoredInMemoryOnly: false,
+            cloudKitDatabase: .none
+        )
+        if let mc = try? ModelContainer(for: schema, configurations: [config]) {
+            container = mc
+            return
+        }
+        // Wipe store and retry once
+        let storeURL = config.url
+        let dir = storeURL.deletingLastPathComponent()
+        let storeName = storeURL.lastPathComponent
+        for suffix in ["", "-shm", "-wal"] {
+            try? FileManager.default.removeItem(at: dir.appendingPathComponent(storeName + suffix))
+        }
         do {
-            let schema = Schema([
-                UserProfile.self,
-                HealthSnapshot.self,
-                Achievement.self,
-                Streak.self,
-                Challenge.self,
-                ActivityLog.self
-            ])
-            let config = ModelConfiguration(
-                schema: schema,
-                isStoredInMemoryOnly: false,
-                cloudKitContainerIdentifier: Constants.App.iCloudContainer
-            )
             container = try ModelContainer(for: schema, configurations: [config])
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")

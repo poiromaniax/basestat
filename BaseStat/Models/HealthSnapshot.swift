@@ -3,19 +3,19 @@ import SwiftData
 
 @Model
 final class HealthSnapshot {
-    var id: UUID
-    var date: Date
+    var id: UUID = UUID()
+    var date: Date = Date()
     var weightKg: Double?
     var bmi: Double?
-    var steps: Int
-    var activeCalories: Double
-    var basalCalories: Double
-    var exerciseMinutes: Int
+    var steps: Int = 0
+    var activeCalories: Double = 0
+    var basalCalories: Double = 0
+    var exerciseMinutes: Int = 0
     var heartRateResting: Double?
     var heartRateAverage: Double?
-    var sleepHours: Double
-    var dietaryCalories: Double
-    var distanceKm: Double
+    var sleepHours: Double = 0
+    var dietaryCalories: Double = 0
+    var distanceKm: Double = 0
 
     init(
         id: UUID = UUID(),
