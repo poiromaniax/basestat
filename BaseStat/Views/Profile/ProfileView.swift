@@ -6,6 +6,11 @@ struct ProfileView: View {
     @State private var viewModel = ProfileViewModel()
     @State private var showEditProfile = false
     @State private var selectedHistory: Constants.HistoryOption = Constants.HistoryOption.saved
+    @State private var journeyStartDate: Date = (UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.journeyStartDate) as? Date) ?? Date()
+    @State private var notifStreakEnabled: Bool = UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.notifStreakEnabled) as? Bool ?? true
+    @State private var notifAchievementEnabled: Bool = UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.notifAchievementEnabled) as? Bool ?? true
+    @State private var notifLevelUpEnabled: Bool = UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.notifLevelUpEnabled) as? Bool ?? true
+    @State private var notifStreakHour: Int = UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.notifStreakHour) as? Int ?? Constants.Notifications.streakReminderHour
 
     var body: some View {
         NavigationStack {
@@ -19,6 +24,8 @@ struct ProfileView: View {
                         streaksCard
                         recentActivityCard
                         healthSettingsCard
+                        journeySettingsCard
+                        notificationSettingsCard
                     }
                     .padding(.horizontal, BaseStatTheme.Spacing.md)
                     .padding(.bottom, BaseStatTheme.Spacing.xxl)
@@ -216,6 +223,79 @@ struct ProfileView: View {
                     if option != Constants.HistoryOption.allCases.last {
                         Divider().opacity(0.3)
                     }
+                }
+            }
+        }
+    }
+
+    // MARK: - Journey Settings Card
+
+    private var journeySettingsCard: some View {
+        GlassCard(cornerRadius: BaseStatTheme.Radius.md) {
+            VStack(alignment: .leading, spacing: BaseStatTheme.Spacing.sm) {
+                Text("Journey")
+                    .sectionHeaderStyle()
+
+                DatePicker(
+                    "Start Date",
+                    selection: $journeyStartDate,
+                    in: ...Date(),
+                    displayedComponents: .date
+                )
+                .onChange(of: journeyStartDate) { _, date in
+                    UserDefaults.standard.set(date, forKey: Constants.UserDefaultsKeys.journeyStartDate)
+                }
+                .font(BaseStatTheme.Typography.body)
+            }
+        }
+    }
+
+    // MARK: - Notification Settings Card
+
+    private var notificationSettingsCard: some View {
+        GlassCard(cornerRadius: BaseStatTheme.Radius.md) {
+            VStack(alignment: .leading, spacing: BaseStatTheme.Spacing.sm) {
+                Text("Notifications")
+                    .sectionHeaderStyle()
+
+                Toggle(isOn: $notifStreakEnabled) {
+                    Label("Streak Reminder", systemImage: "flame.fill")
+                }
+                .onChange(of: notifStreakEnabled) { _, val in
+                    UserDefaults.standard.set(val, forKey: Constants.UserDefaultsKeys.notifStreakEnabled)
+                    if val {
+                        NotificationManager.shared.scheduleStreakReminder(hour: notifStreakHour)
+                    } else {
+                        NotificationManager.shared.cancelStreakReminder()
+                    }
+                }
+
+                if notifStreakEnabled {
+                    Divider().opacity(0.3)
+                    Stepper("Reminder at \(notifStreakHour):00", value: $notifStreakHour, in: 6...22)
+                        .font(BaseStatTheme.Typography.body)
+                        .onChange(of: notifStreakHour) { _, hour in
+                            UserDefaults.standard.set(hour, forKey: Constants.UserDefaultsKeys.notifStreakHour)
+                            NotificationManager.shared.scheduleStreakReminder(hour: hour)
+                        }
+                }
+
+                Divider().opacity(0.3)
+
+                Toggle(isOn: $notifAchievementEnabled) {
+                    Label("Achievement Unlocks", systemImage: "trophy.fill")
+                }
+                .onChange(of: notifAchievementEnabled) { _, val in
+                    UserDefaults.standard.set(val, forKey: Constants.UserDefaultsKeys.notifAchievementEnabled)
+                }
+
+                Divider().opacity(0.3)
+
+                Toggle(isOn: $notifLevelUpEnabled) {
+                    Label("Level Up", systemImage: "arrow.up.circle.fill")
+                }
+                .onChange(of: notifLevelUpEnabled) { _, val in
+                    UserDefaults.standard.set(val, forKey: Constants.UserDefaultsKeys.notifLevelUpEnabled)
                 }
             }
         }

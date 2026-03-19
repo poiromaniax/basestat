@@ -13,6 +13,12 @@ final class GamificationEngine {
     var pendingAchievements: [AchievementDefinition] = []
     var recentXPEvents: [(amount: Int, label: String)] = []
 
+    /// When true, unlockAchievement tallies into batchUnlockedCount instead of showing popups
+    var suppressPopups: Bool = false
+    var batchUnlockedCount: Int = 0
+    /// IDs of achievements unlocked in the current session — used for glow animation in gallery
+    var recentlyUnlockedIds: Set<String> = []
+
     // MARK: - XP Awarding
 
     @discardableResult
@@ -278,7 +284,12 @@ final class GamificationEngine {
             context.insert(ach)
         }
         awardXP(def.xpReward, reason: .achievementUnlocked, description: "Unlocked: \(def.title)", context: context)
-        pendingAchievements.append(def)
+        recentlyUnlockedIds.insert(def.id)
+        if suppressPopups {
+            batchUnlockedCount += 1
+        } else {
+            pendingAchievements.append(def)
+        }
         try? context.save()
     }
 

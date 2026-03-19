@@ -13,10 +13,12 @@ final class NotificationManager {
 
     // MARK: - Streak Reminder
 
-    func scheduleStreakReminder() {
+    func scheduleStreakReminder(hour: Int? = nil) {
+        guard UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.notifStreakEnabled) as? Bool ?? true else { return }
         center.removePendingNotificationRequests(withIdentifiers: ["streak.daily"])
+        let reminderHour = hour ?? (UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.notifStreakHour) as? Int ?? Constants.Notifications.streakReminderHour)
         var components = DateComponents()
-        components.hour   = Constants.Notifications.streakReminderHour
+        components.hour   = reminderHour
         components.minute = Constants.Notifications.streakReminderMinute
 
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
@@ -32,7 +34,12 @@ final class NotificationManager {
 
     // MARK: - Achievement Unlocked
 
+    func cancelStreakReminder() {
+        center.removePendingNotificationRequests(withIdentifiers: ["streak.daily"])
+    }
+
     func notifyAchievementUnlocked(_ achievement: AchievementDefinition) {
+        guard UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.notifAchievementEnabled) as? Bool ?? true else { return }
         let content = UNMutableNotificationContent()
         content.title = "Achievement Unlocked! 🏆"
         content.body  = "\"\(achievement.title)\" — \(achievement.description)"
@@ -50,6 +57,7 @@ final class NotificationManager {
     // MARK: - Level Up
 
     func notifyLevelUp(newLevel: Int) {
+        guard UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.notifLevelUpEnabled) as? Bool ?? true else { return }
         let content = UNMutableNotificationContent()
         content.title = "Level Up! ⬆️"
         content.body  = "You reached Level \(newLevel)! Keep pushing your limits."

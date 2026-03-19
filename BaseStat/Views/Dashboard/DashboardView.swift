@@ -5,6 +5,7 @@ struct DashboardView: View {
     @Environment(\.modelContext) private var context
     @State private var viewModel = DashboardViewModel()
     @State private var engine    = GamificationEngine.shared
+    @State private var showBatchBanner = false
 
     var body: some View {
         NavigationStack {
@@ -30,6 +31,9 @@ struct DashboardView: View {
             .overlay { overlays }
             .task { await viewModel.load(context: context) }
             .refreshable { await viewModel.load(context: context) }
+            .onChange(of: engine.batchUnlockedCount) { _, count in
+                if count > 0 { withAnimation { showBatchBanner = true } }
+            }
         }
     }
 
@@ -43,13 +47,6 @@ struct DashboardView: View {
                 .frame(width: 32, height: 32)
                 .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
             Spacer()
-            NavigationLink {
-                HealthDetailRootView()
-            } label: {
-                Image(systemName: "chart.line.uptrend.xyaxis")
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(.primary)
-            }
         }
         .padding(.top, BaseStatTheme.Spacing.sm)
     }
@@ -239,19 +236,66 @@ struct DashboardView: View {
             .transition(.opacity)
             .zIndex(10)
         } else if let achievement = engine.pendingAchievements.first {
-            BadgeUnlockOverlay(achievement: achievement) {
+            BadgeUnlockOverlay(
+                achievement: achievement,
+                hasMore: engine.pendingAchievements.count > 1
+            ) {
                 engine.pendingAchievements.removeFirst()
             }
+            .id(achievement.id)
             .transition(.opacity)
             .zIndex(9)
+        } else if showBatchBanner, engine.batchUnlockedCount > 0 {
+            batchUnlockBanner
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .zIndex(8)
+        }
+    }
+
+    // MARK: - Batch Unlock Banner
+
+    private var batchUnlockBanner: some View {
+        VStack {
+            HStack(spacing: BaseStatTheme.Spacing.sm) {
+                Image(systemName: "trophy.fill")
+                    .foregroundStyle(BaseStatTheme.rarityLegendary)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("\(engine.batchUnlockedCount) achievements unlocked!")
+                        .font(BaseStatTheme.Typography.bodySemibold)
+                    Text("Visit the Achievements tab to see your badges")
+                        .font(BaseStatTheme.Typography.small)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Button {
+                    withAnimation { showBatchBanner = false }
+                    engine.batchUnlockedCount = 0
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .padding(BaseStatTheme.Spacing.md)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: BaseStatTheme.Radius.md))
+            .padding(.horizontal, BaseStatTheme.Spacing.md)
+            .padding(.top, 56)
+            Spacer()
         }
     }
 
     // MARK: - Helpers
 
     private var daysSinceJoin: Int {
-        guard let joinDate = viewModel.profile?.joinDate else { return 1 }
-        return max(1, Calendar.current.dateComponents([.day], from: joinDate, to: Date()).day ?? 1)
+        let startDate: Date
+        if let saved = UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.journeyStartDate) as? Date {
+            startDate = saved
+        } else {
+            startDate = viewModel.profile?.joinDate ?? Date()
+        }
+        let cal = Calendar.current
+        let elapsed = cal.dateComponents([.day], from: cal.startOfDay(for: startDate), to: cal.startOfDay(for: Date())).day ?? 0
+        return elapsed + 1
     }
 }
 

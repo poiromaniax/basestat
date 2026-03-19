@@ -195,7 +195,9 @@ final class HealthKitManager {
         return await withCheckedContinuation { continuation in
             let predicate = HKQuery.predicateForSamples(withStart: .distantPast, end: Date())
             let query = HKSampleQuery(sampleType: HKObjectType.workoutType(), predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, samples, _ in
-                let best = (samples as? [HKWorkout] ?? []).map { Int($0.duration / 60) }.max() ?? 0
+                let best = (samples as? [HKWorkout] ?? [])
+                    .filter { $0.duration < 6 * 3_600 } // exclude sleep trackers / all-day sessions
+                    .map { Int($0.duration / 60) }.max() ?? 0
                 continuation.resume(returning: best)
             }
             store.execute(query)

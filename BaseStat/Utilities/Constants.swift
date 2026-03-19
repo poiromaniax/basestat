@@ -34,7 +34,12 @@ enum Constants {
         static let lastHealthSyncDate     = "lastHealthSyncDate"
         static let startingWeightKg       = "startingWeightKg"
         static let healthHistoryDays      = "healthHistoryDays"
-        static let lastDailyLoginDate     = "lastDailyLoginDate"
+        static let lastDailyLoginDate          = "lastDailyLoginDate"
+        static let journeyStartDate             = "journeyStartDate"
+        static let notifStreakEnabled           = "notifStreakEnabled"
+        static let notifAchievementEnabled      = "notifAchievementEnabled"
+        static let notifLevelUpEnabled          = "notifLevelUpEnabled"
+        static let notifStreakHour              = "notifStreakHour"
     }
 
     enum HistoryOption: Int, CaseIterable, Identifiable {

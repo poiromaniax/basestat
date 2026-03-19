@@ -7,6 +7,8 @@ struct AchievementBadgeView: View {
     var size: CGFloat = 80
 
     @State private var pressed = false
+    @State private var glowPulse = false
+    private var isNew: Bool { GamificationEngine.shared.recentlyUnlockedIds.contains(definition.id) }
 
     var body: some View {
         VStack(spacing: BaseStatTheme.Spacing.xs) {
@@ -20,23 +22,31 @@ struct AchievementBadgeView: View {
         }
         .scaleEffect(pressed ? 0.93 : 1.0)
         .animation(.spring(duration: 0.2), value: pressed)
+        .onAppear {
+            if isNew { glowPulse = true }
+        }
+        .onChange(of: isNew) { _, newValue in
+            if newValue { glowPulse = true }
+        }
     }
 
     private var badgeCircle: some View {
         ZStack {
             if isUnlocked {
-                // Glow
+                // Glow (extra pulse when newly unlocked)
                 Circle()
                     .fill(
                         RadialGradient(
-                            colors: [definition.rarity.swiftUIColor.opacity(0.45), .clear],
+                            colors: [definition.rarity.swiftUIColor.opacity(glowPulse ? 0.7 : 0.45), .clear],
                             center: .center,
                             startRadius: 0,
                             endRadius: size * 0.6
                         )
                     )
                     .frame(width: size + 20, height: size + 20)
-                    .blur(radius: 8)
+                    .blur(radius: glowPulse ? 12 : 8)
+                    .scaleEffect(glowPulse ? 1.3 : 1.0)
+                    .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: glowPulse)
 
                 // Gradient badge
                 Circle()

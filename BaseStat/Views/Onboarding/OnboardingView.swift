@@ -302,8 +302,12 @@ struct OnboardingView: View {
 
         Task {
             try? await HealthKitManager.shared.requestAuthorization()
+            engine.suppressPopups = true
+            engine.batchUnlockedCount = 0
             await HealthKitManager.shared.importHealthHistory(days: historyOption.rawValue, context: context)
             await engine.checkPersonalRecords(context: context)
+            engine.suppressPopups = false
+
             await NotificationManager.shared.requestAuthorization()
             NotificationManager.shared.scheduleStreakReminder()
 

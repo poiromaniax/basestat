@@ -83,7 +83,7 @@ enum AchievementCatalog {
             id: "steps.week_70k",
             title: "70K Week",
             description: "Walk 70,000 steps in a single week.",
-            icon: "figure.walk.diamond.fill",
+            icon: "figure.walk.motion",
             category: .steps, xpReward: 400, rarity: .rare
         ),
         AchievementDefinition(
@@ -271,7 +271,7 @@ enum AchievementCatalog {
             id: "pr.steps_30k",
             title: "30K Crusher",
             description: "Walk 30,000 steps in a single day.",
-            icon: "figure.walk.diamond.fill",
+            icon: "figure.run",
             category: .records, xpReward: 500, rarity: .epic
         ),
         AchievementDefinition(
@@ -285,7 +285,7 @@ enum AchievementCatalog {
             id: "pr.calories_1000",
             title: "1000 Cal Burn",
             description: "Burn 1,000 active calories in a single day.",
-            icon: "flame.circle.fill",
+            icon: "bolt.fill",
             category: .records, xpReward: 300, rarity: .rare
         ),
         AchievementDefinition(

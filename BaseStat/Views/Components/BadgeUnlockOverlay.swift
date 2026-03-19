@@ -2,6 +2,7 @@ import SwiftUI
 
 struct BadgeUnlockOverlay: View {
     var achievement: AchievementDefinition
+    var hasMore: Bool
     var onDismiss: () -> Void
 
     @State private var scale: CGFloat = 0.1
@@ -13,11 +14,9 @@ struct BadgeUnlockOverlay: View {
         ZStack {
             Color.black.opacity(0.55)
                 .ignoresSafeArea()
-                .onTapGesture { dismiss() }
 
             VStack(spacing: BaseStatTheme.Spacing.lg) {
                 ZStack {
-                    // Glow ring
                     Circle()
                         .fill(achievement.rarity.swiftUIColor.opacity(glowPulse ? 0.35 : 0.15))
                         .frame(width: 160, height: 160)
@@ -25,7 +24,6 @@ struct BadgeUnlockOverlay: View {
                         .scaleEffect(glowPulse ? 1.15 : 0.9)
                         .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: glowPulse)
 
-                    // Badge circle
                     Circle()
                         .fill(
                             LinearGradient(
@@ -36,7 +34,6 @@ struct BadgeUnlockOverlay: View {
                         )
                         .frame(width: 120, height: 120)
                         .overlay {
-                            // Shimmer mask
                             Rectangle()
                                 .fill(
                                     LinearGradient(
@@ -86,10 +83,21 @@ struct BadgeUnlockOverlay: View {
                 }
                 .opacity(opacity)
 
-                Text("Tap anywhere to continue")
-                    .font(BaseStatTheme.Typography.small)
-                    .foregroundStyle(.tertiary)
-                    .opacity(opacity)
+                Button {
+                    dismiss()
+                } label: {
+                    Text(hasMore ? "Next" : "Got it!")
+                        .font(BaseStatTheme.Typography.bodySemibold)
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                        .background(
+                            Capsule()
+                                .fill(achievement.rarity.swiftUIColor.opacity(0.35))
+                                .glassEffect(.regular.interactive(), in: Capsule())
+                        )
+                }
+                .opacity(opacity)
             }
             .padding(BaseStatTheme.Spacing.xl)
         }
@@ -121,5 +129,5 @@ struct BadgeUnlockOverlay: View {
 }
 
 #Preview {
-    BadgeUnlockOverlay(achievement: AchievementCatalog.all[3]) {}
+    BadgeUnlockOverlay(achievement: AchievementCatalog.all[3], hasMore: false) {}
 }
