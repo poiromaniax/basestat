@@ -122,7 +122,7 @@ enum AchievementCatalog {
             id: "exercise.workouts_100",
             title: "Century Club",
             description: "Complete 100 workouts. You're unstoppable.",
-            icon: "100.circle.fill",
+            icon: "medal.fill",
             category: .exercise, xpReward: 1500, rarity: .epic
         ),
         AchievementDefinition(

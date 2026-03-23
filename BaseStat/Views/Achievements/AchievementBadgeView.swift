@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct AchievementBadgeView: View {
     var definition: AchievementDefinition
@@ -102,6 +103,7 @@ struct AchievementBadgeView: View {
 // MARK: - Detailed Badge Sheet
 
 struct AchievementDetailSheet: View {
+    @Environment(\.modelContext) private var context
     var definition: AchievementDefinition
     var isUnlocked: Bool
     var unlockedDate: Date?
@@ -110,44 +112,174 @@ struct AchievementDetailSheet: View {
         ZStack {
             StaticMeshBackground(colors: BaseStatTheme.achievementMeshColors)
 
-            VStack(spacing: BaseStatTheme.Spacing.lg) {
-                AchievementBadgeView(definition: definition, isUnlocked: isUnlocked, unlockedDate: unlockedDate, size: 110)
+            ScrollView {
+                VStack(spacing: BaseStatTheme.Spacing.lg) {
+                    AchievementBadgeView(definition: definition, isUnlocked: isUnlocked, unlockedDate: unlockedDate, size: 110)
 
-                VStack(spacing: BaseStatTheme.Spacing.sm) {
-                    Text(definition.title)
-                        .font(BaseStatTheme.Typography.title2)
-                        .foregroundStyle(.primary)
-                        .multilineTextAlignment(.center)
+                    VStack(spacing: BaseStatTheme.Spacing.sm) {
+                        Text(definition.title)
+                            .font(BaseStatTheme.Typography.title2)
+                            .foregroundStyle(.primary)
+                            .multilineTextAlignment(.center)
 
-                    Text(definition.description)
-                        .font(BaseStatTheme.Typography.body)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-
-                    HStack(spacing: 12) {
-                        rarityBadge
-                        xpBadge
-                    }
-
-                    if isUnlocked, let date = unlockedDate {
-                        Text("Unlocked \(date.shortDate)")
-                            .font(BaseStatTheme.Typography.caption)
+                        Text(definition.description)
+                            .font(BaseStatTheme.Typography.body)
                             .foregroundStyle(.secondary)
-                            .padding(.top, 4)
-                    } else {
-                        Text("Not yet unlocked")
-                            .font(BaseStatTheme.Typography.caption)
-                            .foregroundStyle(.tertiary)
-                            .padding(.top, 4)
-                    }
-                }
+                            .multilineTextAlignment(.center)
 
-                Spacer()
+                        HStack(spacing: 12) {
+                            rarityBadge
+                            xpBadge
+                        }
+
+                        if isUnlocked, let date = unlockedDate {
+                            Text("Unlocked \(date.shortDate)")
+                                .font(BaseStatTheme.Typography.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.top, 2)
+                        } else {
+                            Text("Not yet unlocked")
+                                .font(BaseStatTheme.Typography.caption)
+                                .foregroundStyle(.tertiary)
+                                .padding(.top, 2)
+                        }
+                    }
+
+                    if isUnlocked, let detail = earnedContext {
+                        GlassCard(cornerRadius: BaseStatTheme.Radius.md) {
+                            VStack(alignment: .leading, spacing: BaseStatTheme.Spacing.xs) {
+                                Label("How you earned it", systemImage: "checkmark.seal.fill")
+                                    .font(BaseStatTheme.Typography.caption)
+                                    .foregroundStyle(.secondary)
+                                    .tracking(1)
+                                Text(detail)
+                                    .font(BaseStatTheme.Typography.bodySemibold)
+                                    .foregroundStyle(.primary)
+                            }
+                        }
+                        .padding(.horizontal, BaseStatTheme.Spacing.lg)
+                    }
+
+                    Spacer(minLength: BaseStatTheme.Spacing.xxl)
+                }
+                .padding(.top, BaseStatTheme.Spacing.xxl)
+                .padding(.horizontal, BaseStatTheme.Spacing.lg)
             }
-            .padding(.top, BaseStatTheme.Spacing.xxl)
-            .padding(.horizontal, BaseStatTheme.Spacing.lg)
         }
     }
+
+    // MARK: - Earned Context
+
+    private var earnedContext: String? {
+        let snapshots = (try? context.fetch(
+            FetchDescriptor<HealthSnapshot>(sortBy: [SortDescriptor(\.date)])
+        )) ?? []
+        let streaks = (try? context.fetch(FetchDescriptor<Streak>())) ?? []
+        let profile = (try? context.fetch(FetchDescriptor<UserProfile>()))?.first
+        let startWeight = UserDefaults.standard.double(forKey: Constants.UserDefaultsKeys.startingWeightKg)
+
+        switch definition.id {
+        case "weight.first_weigh_in":
+            if let w = snapshots.compactMap(\.weightKg).first {
+                return "First weight logged: \(w.asWeightString) kg"
+            }
+        case "weight.lost_1kg", "weight.lost_5kg", "weight.lost_10kg", "weight.lost_25kg":
+            if startWeight > 0, let cur = snapshots.last(where: { $0.weightKg != nil })?.weightKg {
+                return "From \(startWeight.asWeightString) → \(cur.asWeightString) kg · Lost \((startWeight - cur).formatted(decimals: 1)) kg"
+            }
+        case "weight.goal_reached":
+            if let goal = profile?.weightGoalKg, let cur = snapshots.last(where: { $0.weightKg != nil })?.weightKg {
+                return "Goal: \(goal.asWeightString) kg · Reached \(cur.asWeightString) kg"
+            }
+        case "weight.consistent_7":
+            let days = snapshots.filter { $0.weightKg != nil }.count
+            return "Weight logged on \(days) days total"
+        case "steps.first_10k":
+            if let best = snapshots.max(by: { $0.steps < $1.steps }) {
+                return "Best step day: \(best.steps.formattedSteps) steps on \(best.date.shortDate)"
+            }
+        case "steps.streak_7", "steps.streak_30":
+            if let s = streaks.first(where: { $0.type == .steps }) {
+                return "Steps streak: \(s.currentCount) days · Best ever: \(s.longestCount) days"
+            }
+        case "steps.week_70k":
+            if let best = snapshots.max(by: { $0.steps < $1.steps }) {
+                return "Best single day: \(best.steps.formattedSteps) steps on \(best.date.shortDate)"
+            }
+        case "steps.million":
+            let total = snapshots.reduce(0) { $0 + $1.steps }
+            return "Total steps accumulated: \(total.formattedSteps)"
+        case "exercise.first_workout":
+            if let first = snapshots.first(where: { $0.exerciseMinutes >= 20 }) {
+                return "First workout recorded on \(first.date.shortDate)"
+            }
+        case "exercise.workouts_10", "exercise.workouts_50", "exercise.workouts_100":
+            let count = snapshots.filter { $0.exerciseMinutes >= 20 }.count
+            return "Total workout days recorded: \(count)"
+        case "exercise.streak_7", "exercise.streak_30":
+            if let s = streaks.first(where: { $0.type == .exercise }) {
+                return "Exercise streak: \(s.currentCount) days · Best ever: \(s.longestCount) days"
+            }
+        case "exercise.active_1hour":
+            if let best = snapshots.max(by: { $0.exerciseMinutes < $1.exerciseMinutes }) {
+                return "Best day: \(best.exerciseMinutes) active minutes on \(best.date.shortDate)"
+            }
+        case "sleep.first_8hours":
+            if let best = snapshots.max(by: { $0.sleepHours < $1.sleepHours }) {
+                return "Best sleep: \(best.sleepHours.formatted(decimals: 1)) hours on \(best.date.shortDate)"
+            }
+        case "sleep.streak_7", "sleep.streak_30":
+            if let s = streaks.first(where: { $0.type == .sleep }) {
+                return "Sleep streak: \(s.currentCount) days · Best ever: \(s.longestCount) days"
+            }
+        case "heart.first_reading":
+            if let hr = snapshots.compactMap(\.heartRateResting).first {
+                return "First resting HR reading: \(Int(hr)) bpm"
+            }
+        case "heart.resting_below_60":
+            if let best = snapshots.compactMap(\.heartRateResting).min() {
+                return "Best resting heart rate: \(Int(best)) bpm"
+            }
+        case "heart.improved_hr":
+            let hrs = snapshots.compactMap(\.heartRateResting)
+            if let first = hrs.first, let last = hrs.last {
+                return "Heart rate: \(Int(first)) bpm → \(Int(last)) bpm"
+            }
+        case "meta.first_login":
+            if let date = unlockedDate {
+                return "Journey started on \(date.shortDate)"
+            }
+        case "meta.level_10", "meta.level_25", "meta.level_50":
+            if let p = profile {
+                return "Level \(p.level) · \(p.totalXP.asXPString) total XP earned"
+            }
+        case "meta.streak_7", "meta.streak_30", "meta.streak_100":
+            if let s = streaks.first(where: { $0.type == .dailyLogin }) {
+                return "Daily streak: \(s.currentCount) days · Best ever: \(s.longestCount) days"
+            }
+        case "pr.lowest_weight":
+            if let min = snapshots.compactMap(\.weightKg).min() {
+                return "All-time lowest weight: \(min.asWeightString) kg"
+            }
+        case "pr.steps_20k", "pr.steps_30k", "pr.steps_50k":
+            if let best = snapshots.max(by: { $0.steps < $1.steps }) {
+                return "Personal record: \(best.steps.formattedSteps) steps on \(best.date.shortDate)"
+            }
+        case "pr.calories_1000", "pr.calories_2000":
+            if let best = snapshots.max(by: { $0.activeCalories < $1.activeCalories }) {
+                return "Personal record: \(best.activeCalories.asCaloriesString) kcal on \(best.date.shortDate)"
+            }
+        case "pr.workout_60min", "pr.workout_120min", "pr.workout_180min":
+            if let best = snapshots.max(by: { $0.exerciseMinutes < $1.exerciseMinutes }) {
+                return "Best workout: \(best.exerciseMinutes) min on \(best.date.shortDate)"
+            }
+        default:
+            return nil
+        }
+        return nil
+    }
+
+    // MARK: - Badges
 
     private var rarityBadge: some View {
         HStack(spacing: 5) {

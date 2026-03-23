@@ -31,7 +31,7 @@ struct AchievementsGalleryView: View {
                     isUnlocked: viewModel.isUnlocked(def.id),
                     unlockedDate: viewModel.unlockedDate(for: def.id)
                 )
-                .presentationDetents([.medium])
+                .presentationDetents([.medium, .large])
                 .presentationBackground(.clear)
             }
             .onAppear { viewModel.load(context: context) }

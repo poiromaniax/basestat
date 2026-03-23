@@ -6,6 +6,7 @@ struct DashboardView: View {
     @State private var viewModel = DashboardViewModel()
     @State private var engine    = GamificationEngine.shared
     @State private var showBatchBanner = false
+    @State private var showLevelSheet   = false
 
     var body: some View {
         NavigationStack {
@@ -33,6 +34,13 @@ struct DashboardView: View {
             .refreshable { await viewModel.load(context: context) }
             .onChange(of: engine.batchUnlockedCount) { _, count in
                 if count > 0 { withAnimation { showBatchBanner = true } }
+            }
+            .sheet(isPresented: $showLevelSheet) {
+                if let profile = viewModel.profile {
+                    LevelProgressionSheet(profile: profile)
+                        .presentationDetents([.large])
+                        .presentationBackground(.clear)
+                }
             }
         }
     }
@@ -72,7 +80,10 @@ struct DashboardView: View {
                 }
                 Spacer()
                 if let profile = viewModel.profile {
-                    LevelProgressRing(profile: profile, size: 80)
+                    Button { showLevelSheet = true } label: {
+                        LevelProgressRing(profile: profile, size: 80)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
         }
